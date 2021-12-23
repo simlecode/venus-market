@@ -152,6 +152,10 @@ type MarketFullNode interface {
 
 	// Paych
 	PaychVoucherList(ctx context.Context, pch address.Address) ([]*paych.SignedVoucher, error) //perm:read
+
+	//piece storage
+	GetReadUrl(context.Context, string) (string, error)
+	GetWriteUrl(ctx context.Context, resource string) (string, error)
 }
 
 type MarketClientNode interface {
@@ -228,5 +232,4 @@ type MarketClientNode interface {
 	MessagerWaitMessage(ctx context.Context, mid cid.Cid) (*apitypes.MsgLookup, error)                   //perm:read
 	MessagerPushMessage(ctx context.Context, msg *vTypes.Message, meta *mTypes.MsgMeta) (cid.Cid, error) //perm:write
 	MessagerGetMessage(ctx context.Context, mid cid.Cid) (*vTypes.Message, error)                        //perm:read
-
 }
