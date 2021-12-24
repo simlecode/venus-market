@@ -3,6 +3,7 @@ package storageadapter
 import (
 	"context"
 	"fmt"
+	"github.com/mitchellh/go-homedir"
 	"os"
 	"path/filepath"
 	"time"
@@ -62,7 +63,11 @@ func NewStorageAsk(ctx metrics.MetricsCtx,
 
 func NewTransferStore(transferPath string) func() (filestore.FileStore, error) {
 	return func() (filestore.FileStore, error) {
-		return piecefilestore.NewLocalFileStore(piecefilestore.OsPath(transferPath))
+		path, err := homedir.Expand(transferPath)
+		if err != nil {
+			return nil, err
+		}
+		return piecefilestore.NewLocalFileStore(piecefilestore.OsPath(path))
 	}
 }
 
