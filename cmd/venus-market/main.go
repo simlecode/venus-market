@@ -208,7 +208,8 @@ func flagData(cctx *cli.Context, cfg *config.MarketConfig) error {
 	}
 
 	if cctx.IsSet("piecestorage") {
-		pieceStorage, err := piecestorage.ParserProtocol(cctx.String("piecestorage"))
+		pieceStorage := config.PieceStorage{}
+		err := piecestorage.ParserProtocol(cctx.String("piecestorage"), &pieceStorage)
 		if err != nil {
 			return err
 		}
