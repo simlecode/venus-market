@@ -73,6 +73,10 @@ type MarketNodeImpl struct {
 	SetExpectedSealDurationFunc config.SetExpectedSealDurationFunc
 }
 
+func (m MarketNodeImpl) WalletSignMessage(ctx context.Context, k address.Address, msg *vTypes.UnsignedMessage) (*vTypes.SignedMessage, error) {
+	return m.FullNode.WalletSignMessage(ctx, k, msg)
+}
+
 func (m MarketNodeImpl) ActorAddress(ctx context.Context) (address.Address, error) {
 	return address.NewFromString(m.Cfg.MinerAddress)
 }

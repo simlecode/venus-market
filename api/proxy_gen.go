@@ -224,6 +224,8 @@ type MarketFullNodeStruct struct {
 		UpdateDealOnPacking func(p0 context.Context, p1 address.Address, p2 cid.Cid, p3 abi.DealID, p4 abi.SectorNumber, p5 abi.PaddedPieceSize) error `perm:"write"`
 
 		UpdateDealStatus func(p0 context.Context, p1 address.Address, p2 abi.DealID, p3 string) error `perm:"write"`
+
+		WalletSignMessage func(p0 context.Context, p1 address.Address, p2 *vTypes.UnsignedMessage) (*vTypes.SignedMessage, error) `perm:"admin"`
 	}
 }
 
@@ -988,6 +990,14 @@ func (s *MarketFullNodeStruct) UpdateDealStatus(p0 context.Context, p1 address.A
 
 func (s *MarketFullNodeStub) UpdateDealStatus(p0 context.Context, p1 address.Address, p2 abi.DealID, p3 string) error {
 	return xerrors.New("method not supported")
+}
+
+func (s *MarketFullNodeStruct) WalletSignMessage(p0 context.Context, p1 address.Address, p2 *vTypes.UnsignedMessage) (*vTypes.SignedMessage, error) {
+	return s.Internal.WalletSignMessage(p0, p1, p2)
+}
+
+func (s *MarketFullNodeStub) WalletSignMessage(p0 context.Context, p1 address.Address, p2 *vTypes.UnsignedMessage) (*vTypes.SignedMessage, error) {
+	return nil, xerrors.New("method not supported")
 }
 
 var _ MarketClientNode = new(MarketClientNodeStruct)

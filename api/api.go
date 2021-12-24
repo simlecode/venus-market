@@ -76,6 +76,7 @@ type MarketFullNode interface {
 	// SectorSetExpectedSealDuration sets the expected time for a sector to seal
 	SectorSetExpectedSealDuration(context.Context, time.Duration) error //perm:write
 
+	WalletSignMessage(ctx context.Context, k address.Address, msg *vTypes.UnsignedMessage) (*vTypes.SignedMessage, error) //perm:admin
 	//messager
 	MessagerWaitMessage(ctx context.Context, mid cid.Cid) (*apitypes.MsgLookup, error)                                 //perm:read
 	MessagerPushMessage(ctx context.Context, msg *vTypes.Message, meta *mTypes.MsgMeta) (*vTypes.SignedMessage, error) //perm:write
